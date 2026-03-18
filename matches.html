@@ -1,23 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Matches</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="js.js"></script>
 </head>
+
 <body>
 
-<nav class="navbar">
-    <div class="logo">JEH DO SMN CREATIVE</div>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="GameSenseAI Logo" class="logo-img">
+            <span class="logo-text">GameSenseAI</span>
+        </div>
 
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="matches.html" class="active">Matches</a></li>
-        <li><a href="profile.html">Profile</a></li>
-    </ul>
-</nav>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="matches.html" class="active">Matches</a></li>
+            <li><a href="profile.html">Profile</a></li>
+        </ul>
+    </nav>
 
-<script src="js.js"></script>
+    <div class="matches-page">
+        <div class="matches-container">
+            <div class="matches-form">
+                <h2>Create a Match Record</h2>
+                <form id="matchForm">
+                    <div class="form-group">
+                        <label>Sport</label>
+                        <select id="matchSport" required>
+                            <option value="" disabled selected>Select a sport</option>
+                            <option value="Cricket">Cricket</option>
+                            <option value="Basketball">Basketball</option>
+                            <option value="Tennis">Tennis</option>
+                            <option value="Badminton">Badminton</option>
+                            <option value="Volleyball">Volleyball</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Outcome</label>
+                        <div class="outcome-options">
+                            <label><input type="radio" name="matchOutcome" value="Won" required> Won</label>
+                            <label><input type="radio" name="matchOutcome" value="Lost" required> Lost</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Personal Notes</label>
+                        <textarea id="matchNotes" rows="4" placeholder="Enter your notes here..." required></textarea>
+                    </div>
+
+                    <button type="submit" id="saveMatchBtn">Save Match</button>
+                </form>
+                <button id="resetMatchesBtn">Reset Matches</button>
+            </div>
+
+            <div class="matches-list-container">
+                <h2>Saved Matches</h2>
+                <div id="matchesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js.js"></script>
 </body>
+
 </html>

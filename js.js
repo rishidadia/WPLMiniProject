@@ -1,5 +1,3 @@
-//Profile section
-
 const form = document.getElementById("profileForm");
 const preview = document.getElementById("preview");
 
@@ -9,22 +7,24 @@ const displayLocation = document.getElementById("displayLocation");
 let profileData = {};
 let selectedSports = [];
 
-/* SPORTS SELECTOR */
 const options = document.querySelectorAll(".sports-options span");
 const selectedContainer = document.getElementById("selectedSports");
 
-options.forEach(option => {
-    option.addEventListener("click", () => {
-        const sport = option.innerText;
+if (options.length > 0) {
+    options.forEach(option => {
+        option.addEventListener("click", () => {
+            const sport = option.innerText;
 
-        if (!selectedSports.includes(sport)) {
-            selectedSports.push(sport);
-            renderSports();
-        }
+            if (!selectedSports.includes(sport)) {
+                selectedSports.push(sport);
+                renderSports();
+            }
+        });
     });
-});
+}
 
 function renderSports() {
+    if (!selectedContainer) return;
     selectedContainer.innerHTML = "";
 
     selectedSports.forEach(sport => {
@@ -40,23 +40,28 @@ function renderSports() {
     });
 }
 
-/* RENDER THE DATA */
 window.onload = () => {
     const saved = localStorage.getItem("profile");
 
     if (saved) {
         profileData = JSON.parse(saved);
 
-        document.getElementById("name").value = profileData.name || "";
-        document.getElementById("age").value = profileData.age || "";
-        document.getElementById("college").value = profileData.college || "";
-        document.getElementById("location").value = profileData.location || "";
-        document.getElementById("stats").value = profileData.stats || "";
+        const nameEl = document.getElementById("name");
+        const ageEl = document.getElementById("age");
+        const collegeEl = document.getElementById("college");
+        const locationEl = document.getElementById("location");
+        const statsEl = document.getElementById("stats");
 
-        displayName.innerText = profileData.name || "Your Name";
-        displayLocation.innerText = profileData.location || "Location";
+        if (nameEl) nameEl.value = profileData.name || "";
+        if (ageEl) ageEl.value = profileData.age || "";
+        if (collegeEl) collegeEl.value = profileData.college || "";
+        if (locationEl) locationEl.value = profileData.location || "";
+        if (statsEl) statsEl.value = profileData.stats || "";
 
-        if (profileData.image) {
+        if (displayName) displayName.innerText = profileData.name || "Your Name";
+        if (displayLocation) displayLocation.innerText = profileData.location || "Location";
+
+        if (profileData.image && preview) {
             preview.src = profileData.image;
         }
 
@@ -65,54 +70,125 @@ window.onload = () => {
             renderSports();
         }
     }
+
+    renderMatches();
 };
 
+const profilePicEl = document.getElementById("profilePic");
+if (profilePicEl) {
+    profilePicEl.addEventListener("change", function () {
+        const file = this.files[0];
+        const reader = new FileReader();
 
-document.getElementById("profilePic").addEventListener("change", function () {
-    const file = this.files[0];
-    const reader = new FileReader();
+        reader.onload = () => {
+            if (preview) preview.src = reader.result;
+        };
 
-    reader.onload = () => {
-        preview.src = reader.result;
-    };
+        if (file) reader.readAsDataURL(file);
+    });
+}
 
-    if (file) reader.readAsDataURL(file);
-});
+if (form) {
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
+        profileData = {
+            name: document.getElementById("name").value,
+            age: document.getElementById("age").value,
+            college: document.getElementById("college").value,
+            location: document.getElementById("location").value,
+            sports: selectedSports,
+            stats: document.getElementById("stats").value,
+            image: preview ? preview.src : ""
+        };
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
+        localStorage.setItem("profile", JSON.stringify(profileData));
+        location.reload();
+    });
+}
 
-    profileData = {
-        name: document.getElementById("name").value,
-        age: document.getElementById("age").value,
-        college: document.getElementById("college").value,
-        location: document.getElementById("location").value,
-        sports: selectedSports,
-        stats: document.getElementById("stats").value,
-        image: preview.src || ""
-    };
+const clearBtn = document.getElementById("clearBtn");
+if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+        localStorage.removeItem("profile");
+        location.reload();
+    });
+}
 
-    localStorage.setItem("profile", JSON.stringify(profileData));
-    location.reload();
-});
-
-/* RESET */
-document.getElementById("clearBtn").addEventListener("click", () => {
-    localStorage.removeItem("profile");
-    location.reload();
-});
 const cardSports = document.getElementById("cardSports");
 
 function updateCard(data) {
-    displayName.innerText = data.name || "Your Name";
-    displayLocation.innerText = data.location || "Location";
+    if (displayName) displayName.innerText = data.name || "Your Name";
+    if (displayLocation) displayLocation.innerText = data.location || "Location";
 
-    // sports tags
-    cardSports.innerHTML = "";
-    (data.sports || []).forEach(s => {
-        const tag = document.createElement("span");
-        tag.innerText = s;
-        cardSports.appendChild(tag);
+    if (cardSports) {
+        cardSports.innerHTML = "";
+        (data.sports || []).forEach(s => {
+            const tag = document.createElement("span");
+            tag.innerText = s;
+            cardSports.appendChild(tag);
+        });
+    }
+}
+
+const matchForm = document.getElementById("matchForm");
+const matchesList = document.getElementById("matchesList");
+const resetMatchesBtn = document.getElementById("resetMatchesBtn");
+
+if (matchForm) {
+    matchForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const sport = document.getElementById("matchSport").value;
+        const outcome = document.querySelector('input[name="matchOutcome"]:checked').value;
+        const notes = document.getElementById("matchNotes").value;
+
+        const newMatch = {
+            id: Date.now(),
+            sport,
+            outcome,
+            notes,
+            date: new Date().toLocaleDateString()
+        };
+
+        const savedMatches = JSON.parse(localStorage.getItem("matches")) || [];
+        savedMatches.push(newMatch);
+        localStorage.setItem("matches", JSON.stringify(savedMatches));
+
+        matchForm.reset();
+        renderMatches();
+    });
+
+    if (resetMatchesBtn) {
+        resetMatchesBtn.addEventListener("click", () => {
+            localStorage.removeItem("matches");
+            renderMatches();
+        });
+    }
+}
+
+function renderMatches() {
+    if (!matchesList) return;
+
+    matchesList.innerHTML = "";
+    const savedMatches = JSON.parse(localStorage.getItem("matches")) || [];
+
+    if (savedMatches.length === 0) {
+        matchesList.innerHTML = "<p>No matches recorded yet.</p>";
+        return;
+    }
+    savedMatches.forEach(match => {
+        const card = document.createElement("div");
+        card.className = "match-card";
+
+        const outcomeClass = match.outcome === "Won" ? "win" : "loss";
+
+        card.innerHTML = `
+            <h3>${match.sport}</h3>
+            <p>Outcome: <span class="${outcomeClass}">${match.outcome}</span></p>
+            <p>Date: ${match.date}</p>
+            <p>Notes: ${match.notes}</p>
+        `;
+        matchesList.appendChild(card);
     });
 }
