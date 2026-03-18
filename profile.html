@@ -4,19 +4,94 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="js.js"></script>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="logo">JEH DO SMN CREATIVE</div>
-
+    <div class="logo">MyApp</div>
     <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="matches.html">Matches</a></li>
         <li><a href="profile.html" class="active">Profile</a></li>
     </ul>
 </nav>
+
+<div class="profile-page">
+
+    <div class="profile-container">
+
+        <!-- PLAYER CARD -->
+        <div class="player-card">
+
+            <img id="preview" class="card-avatar" src="">
+
+            <h2 id="displayName">Your Name</h2>
+            <p id="displayLocation">Location</p>
+
+            <div id="cardSports" class="card-tags"></div>
+
+            <div class="card-stats">
+                <div>
+                    <h3 id="stat1">0</h3>
+                    <p>Matches</p>
+                </div>
+                <div>
+                    <h3 id="stat2">0</h3>
+                    <p>Wins</p>
+                </div>
+                <div>
+                    <h3 id="stat3">0</h3>
+                    <p>Goals</p>
+                </div>
+            </div>
+
+            <button id="clearBtn">Reset</button>
+
+        </div>
+
+        <!-- FORM -->
+        <div class="profile-form">
+
+            <h2>Edit Profile</h2>
+
+            <form id="profileForm">
+
+                <div class="grid">
+                    <input type="text" id="name" placeholder="Name">
+                    <input type="number" id="age" placeholder="Age">
+                    <input type="text" id="college" placeholder="College">
+                    <input type="text" id="location" placeholder="Location">
+                </div>
+
+                <!-- SPORTS -->
+                <div>
+                    <label>Sports</label>
+                    <div class="sports-box">
+                        <div class="sports-options">
+                            <span>Football</span>
+                            <span>Cricket</span>
+                            <span>Basketball</span>
+                            <span>Tennis</span>
+                            <span>Badminton</span>
+                            <span>Volleyball</span>
+                        </div>
+                        <div id="selectedSports" class="selected-sports"></div>
+                    </div>
+                </div>
+                <label>Profile Picture</label>
+                <input type="file" id="profilePic">
+
+                <textarea id="stats" placeholder="Stats (temporary)"></textarea>
+
+                <button type="submit">Save Profile</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 <script src="js.js"></script>
 </body>

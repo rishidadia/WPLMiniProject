@@ -90,3 +90,153 @@ body {
 
 
 /* Profile Page */
+/* ===== PROFILE PAGE ===== */
+
+.profile-page {
+    background: #0d1117;
+    min-height: 100vh;
+    padding: 40px;
+    color: #c9d1d9;
+}
+
+.profile-container {
+    display: flex;
+    gap: 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ===== PLAYER CARD ===== */
+.player-card {
+    width: 300px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.card-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #30363d;
+}
+
+.player-card h2 {
+    margin: 10px 0 5px;
+}
+
+.player-card p {
+    color: #8b949e;
+}
+
+/* TAGS */
+.card-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.card-tags span {
+    background: #21262d;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* STATS */
+.card-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+.card-stats h3 {
+    margin: 0;
+}
+
+/* ===== FORM ===== */
+.profile-form {
+    flex: 1;
+}
+
+.profile-form h2 {
+    margin-bottom: 20px;
+}
+
+#profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+#profileForm input,
+#profileForm textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #30363d;
+    background: #0d1117;
+    color: white;
+}
+
+/* SPORTS */
+.sports-box {
+    border: 1px solid #30363d;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.sports-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sports-options span {
+    padding: 6px 12px;
+    border: 1px solid #30363d;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.selected-sports {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.selected-sports span {
+    background: #238636;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* BUTTONS */
+#profileForm button {
+    padding: 12px;
+    background: #238636;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#clearBtn {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    background: transparent;
+    border: 1px solid #f87171;
+    color: #f87171;
+}
